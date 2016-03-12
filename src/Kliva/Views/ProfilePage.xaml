@@ -64,15 +64,60 @@
             <Pivot x:Name="ProfilePivot"
                    Grid.Row="1"
                    HorizontalAlignment="Stretch">
-                <PivotItem Header="following" Tag="Friends">
-                    <ListView ItemsSource="{x:Bind ViewModel.Friends, Mode=OneWay}"
-                              ItemTemplate="{StaticResource KudosListItemTemplate}" />
-                </PivotItem>
+                <!--<PivotItem Header="following" Tag="Friends">
+                    <ListView ItemsSource="{x:Bind ViewModel.Friends, Mode=OneWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <UserControl>
+                                    <Grid>
+                                        <VisualStateManager.VisualStateGroups>
+                                            <VisualStateGroup x:Name="VisualStateGroup">
+                                                <VisualState x:Name="Mobile">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="320" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="AthleteProfilePicture.Style" Value="{StaticResource ProfileEllipseMobile}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                                <VisualState x:Name="Desktop">
+                                                    <VisualState.StateTriggers>
+                                                        <AdaptiveTrigger MinWindowWidth="720" />
+                                                    </VisualState.StateTriggers>
+                                                    <VisualState.Setters>
+                                                        <Setter Target="AthleteProfilePicture.Style" Value="{StaticResource ProfileEllipseDesktop}" />
+                                                    </VisualState.Setters>
+                                                </VisualState>
+                                            </VisualStateGroup>
+                                        </VisualStateManager.VisualStateGroups>
+                                        <RelativePanel>
+                                            <Ellipse x:Name="AthleteProfilePicture"
+                             Margin="0,5,0,5"
+                             RelativePanel.AlignLeftWithPanel="True">
+                                                <Ellipse.Fill>
+                                                    <ImageBrush Stretch="UniformToFill" ImageSource="{x:Bind ProfileMediumFormatted, Mode=OneWay}" />
+                                                </Ellipse.Fill>
+                                            </Ellipse>
+
+                                            <TextBlock x:Name="ActivityAthleteName"
+                               Text="{x:Bind FullName, Mode=OneWay}"
+                               Style="{StaticResource BaseTextBlock}"
+                               Margin="10,0,0,0"
+                               FontSize="14"
+                               RelativePanel.RightOf="AthleteProfilePicture"
+                               RelativePanel.AlignVerticalCenterWithPanel="True"/>
+                                        </RelativePanel>
+                                    </Grid>
+                                </UserControl>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </PivotItem>-->
                 <PivotItem Header="followers" Tag="Followers">
                     <ListView ItemsSource="{x:Bind ViewModel.Followers, Mode=OneWay}"
                               ItemTemplate="{StaticResource KudosListItemTemplate}" />
                 </PivotItem>
-                <PivotItem Tag="MutualFriends"
+                <!--<PivotItem Tag="MutualFriends"
                            Header="both following">
                     <ListView ItemsSource="{x:Bind ViewModel.BothFollowing, Mode=OneWay}"
                               ItemTemplate="{StaticResource KudosListItemTemplate}" />
@@ -84,7 +129,7 @@
                 <PivotItem Tag="StarredSegments" Header="starred segments">
                     <ListView ItemsSource="{x:Bind ViewModel.StarredSegments, Mode=OneWay}"
                               ItemTemplate="{StaticResource SegmentSummaryListItemTemplate}" />
-                </PivotItem>
+                </PivotItem>-->
             </Pivot>
         </Grid>
 
