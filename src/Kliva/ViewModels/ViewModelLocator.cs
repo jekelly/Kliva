@@ -1,60 +1,161 @@
-﻿using Cimbalino.Toolkit.Services;
+﻿using System;
+using System.Collections.Generic;
+using Cimbalino.Toolkit.Services;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using Kliva.Services;
 using Kliva.Services.Interfaces;
 using Microsoft.Practices.ServiceLocation;
+using Windows.ApplicationModel;
 
 namespace Kliva.ViewModels
 {
-    public class ViewModelLocator
-    {
-        private static void Register<T>(bool createImmediately = false) where T : class
-        {
-            SimpleIoc.Default.Register<T>(createImmediately);
-        }
+	public class ViewModelLocator
+	{
+		private static void Register<T>(bool createImmediately = false) where T : class
+		{
+			SimpleIoc.Default.Register<T>(createImmediately);
+		}
 
-        internal static T Get<T>() where T : class
-        {
-            return SimpleIoc.Default.GetInstance<T>();
-        }
+		internal static T Get<T>() where T : class
+		{
+			return SimpleIoc.Default.GetInstance<T>();
+		}
 
-        public ViewModelLocator()
-        {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+		class DesignModeNavigationService : INavigationService
+		{
+			public bool CanGoBack
+			{
+				get
+				{
+					throw new NotImplementedException();
+				}
+			}
 
-            SimpleIoc.Default.Register<INavigationService, NavigationService>();
-            SimpleIoc.Default.Register<IMessenger, Messenger>();
-            SimpleIoc.Default.Register<IMessageBoxService, MessageBoxService>();
-            SimpleIoc.Default.Register<IStorageService, StorageService>();
-            SimpleIoc.Default.Register<ISettingsService, SettingsService>();
-            SimpleIoc.Default.Register<IStravaService, StravaService>();
-            SimpleIoc.Default.Register<IStravaActivityService, StravaActivityService>();
-            SimpleIoc.Default.Register<IStravaAthleteService, StravaAthleteService>();
-            SimpleIoc.Default.Register<IStravaClubService, StravaClubService>();
-            SimpleIoc.Default.Register<IStravaSegmentService, StravaSegmentService>();
+			public bool CanGoForward
+			{
+				get
+				{
+					throw new NotImplementedException();
+				}
+			}
 
-            Register<MainViewModel>();
-            Register<ActivityDetailViewModel>();
-            Register<LoginViewModel>();
-            Register<SettingsViewModel>();
-            Register<SidePaneViewModel>();
-            Register<ClubsViewModel>();
-            Register<ClubDetailViewModel>();
-            Register<ProfileViewModel>();
-            Register<StatsViewModel>();
+			public object CurrentParameter
+			{
+				get
+				{
+					throw new NotImplementedException();
+				}
+			}
 
-            Register<StravaWebClient>(); // singleton (default in SimpleIoC)
-        }
+			public Uri CurrentSource
+			{
+				get
+				{
+					throw new NotImplementedException();
+				}
+			}
 
-        public MainViewModel Main => Get<MainViewModel>();
-        public ActivityDetailViewModel ActivityDetail => Get<ActivityDetailViewModel>();
-        public LoginViewModel Login => Get<LoginViewModel>();
-        public SettingsViewModel Settings => Get<SettingsViewModel>();
-        public SidePaneViewModel SidePane => Get<SidePaneViewModel>();
-        public ClubsViewModel Clubs => Get<ClubsViewModel>();
-        public ClubDetailViewModel ClubDetail => Get<ClubDetailViewModel>();
-        public ProfileViewModel Profile => Get<ProfileViewModel>();
-        public StatsViewModel Stats => Get<StatsViewModel>();
-    }
+			public IEnumerable<KeyValuePair<string, string>> QueryString
+			{
+				get
+				{
+					throw new NotImplementedException();
+				}
+			}
+
+			public event EventHandler<NavigationServiceBackKeyPressedEventArgs> BackKeyPressed;
+			public event EventHandler Navigated;
+
+			public void GoBack()
+			{
+				throw new NotImplementedException();
+			}
+
+			public void GoForward()
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Navigate(Uri source)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Navigate(Type type)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Navigate(string source)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Navigate(Type type, object parameter)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Navigate<T>()
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool Navigate<T>(object parameter)
+			{
+				throw new NotImplementedException();
+			}
+
+			public bool RemoveBackEntry()
+			{
+				throw new NotImplementedException();
+			}
+		}
+
+		public ViewModelLocator()
+		{
+			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+
+			if (DesignMode.DesignModeEnabled)
+			{
+				SimpleIoc.Default.Register<INavigationService, DesignModeNavigationService>();
+			}
+			else
+			{
+				SimpleIoc.Default.Register<INavigationService, NavigationService>();
+			}
+			SimpleIoc.Default.Register<IMessenger, Messenger>();
+			SimpleIoc.Default.Register<IMessageBoxService, MessageBoxService>();
+			SimpleIoc.Default.Register<IStorageService, StorageService>();
+			SimpleIoc.Default.Register<ISettingsService, SettingsService>();
+			SimpleIoc.Default.Register<IStravaService, StravaService>();
+			SimpleIoc.Default.Register<IStravaActivityService, StravaActivityService>();
+			SimpleIoc.Default.Register<IStravaAthleteService, StravaAthleteService>();
+			SimpleIoc.Default.Register<IStravaClubService, StravaClubService>();
+			SimpleIoc.Default.Register<IStravaSegmentService, StravaSegmentService>();
+
+			Register<MainViewModel>();
+			Register<ActivityDetailViewModel>();
+			Register<LoginViewModel>();
+			Register<SettingsViewModel>();
+			Register<SidePaneViewModel>();
+			Register<ClubsViewModel>();
+			Register<ClubDetailViewModel>();
+			Register<ProfileViewModel>();
+			Register<StatsViewModel>();
+
+			Register<StravaWebClient>(); // singleton (default in SimpleIoC)
+		}
+
+		public MainViewModel Main => Get<MainViewModel>();
+		public ActivityDetailViewModel ActivityDetail => Get<ActivityDetailViewModel>();
+		public LoginViewModel Login => Get<LoginViewModel>();
+		public SettingsViewModel Settings => Get<SettingsViewModel>();
+		public SidePaneViewModel SidePane => Get<SidePaneViewModel>();
+		public ClubsViewModel Clubs => Get<ClubsViewModel>();
+		public ClubDetailViewModel ClubDetail => Get<ClubDetailViewModel>();
+		public ProfileViewModel Profile => Get<ProfileViewModel>();
+		public StatsViewModel Stats => Get<StatsViewModel>();
+	}
 }
